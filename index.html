@@ -44,6 +44,10 @@
       grid-template-columns: 1fr 380px;
       height: calc(100vh - 68px);
     }
+    @media (max-width: 900px) {
+      main { grid-template-columns: 1fr; }
+      .sidebar { border-left: none; border-top: 1px solid #334155; height: auto; max-height: 55vh; }
+    }
     #map {
       height: 100%;
       background: #0f172a;
@@ -164,8 +168,8 @@
       </div>
 
       <div class="last-updated">
-        Last data refresh: <strong>June 19, 2026</strong> (manual seed + scraper assisted + funding deep dive on commissions)<br>
-        <span class="source">Sources: sarasotavotes.gov, votemanatee.gov, county sites. Run scripts/scrape_offices_up.py for fresh offices list. Funding details from public portals (verify).</span>
+        Last data refresh: <strong>June 19, 2026</strong> (enriched data from /data/districts_enriched JSON + scraper offices_up)<br>
+        <span class="source">Sources: sarasotavotes.gov, votemanatee.gov, county sites, dos.fl.gov. Run scripts/scrape_offices_up.py for fresh offices list. Full data loaded via fetch (use local server).</span>
       </div>
     </div>
   </main>
@@ -182,7 +186,9 @@
       className: 'map-tiles'
     }).addTo(map);
 
-    // Load the offices-up JSON files from the scraper (for dynamic "offices up" lists; enriched candidate details are seeded in the districts array)
+    // Load data from JSONs (offices from scraper + full enriched districts)
+    let districts = []; // loaded via fetch from data/districts_enriched_2026-06-19.json
+
     async function loadScraperJSON() {
       try {
         const [sarasotaResp, manateeResp] = await Promise.all([
@@ -199,7 +205,22 @@
         console.log('Note: For full JSON loading in browser, run "python -m http.server" in this folder and visit http://localhost:8000 . Data fetch works best over HTTP.');
       }
     }
-    loadScraperJSON();
+
+    async function loadEnrichedDistricts() {
+      try {
+        const resp = await fetch('data/districts_enriched_2026-06-19.json');
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const data = await resp.json();
+        districts = Array.isArray(data.districts) ? data.districts : [];
+        console.log('Enriched districts loaded from JSON:', districts.length);
+        return districts;
+      } catch (e) {
+        console.warn('Failed to load districts_enriched JSON (use python -m http.server + localhost:8000):', e);
+        // Fallback: leave districts empty; user can still use scraper list button. Full data requires HTTP fetch.
+        districts = [];
+        return districts;
+      }
+    }
 
     function showScraperList() {
       if (!window.loadedOffices) {
@@ -207,482 +228,49 @@
         return;
       }
       const panel = document.getElementById('selection-panel');
-      let html = '<div class="district-info"><strong>All Offices Up from Scraper JSON</strong><br><small>Loaded dynamically</small></div>';
+      let html = '<div class="district-info"><strong>All Offices Up from Scraper JSON</strong><br><small>Loaded dynamically. Enriched details (funding, positions) live in districts_enriched JSON and render on map clicks / statewide button.</small></div>';
       const all = [...(window.loadedOffices.sarasota.offices || []), ...(window.loadedOffices.manatee.offices || [])];
       all.slice(0, 20).forEach(o => {  // limit for demo
         html += `<div class="candidate"><strong>${o.description}</strong> <small>(${o.section} - ${o.office_type})</small></div>`;
       });
-      if (all.length > 20) html += `<div><small>... and ${all.length - 20} more. See JSON files.</small></div>`;
+      if (all.length > 20) html += `<div><small>... and ${all.length - 20} more. See JSON files. Click map or "Statewide" for full candidate/funding details.</small></div>`;
+      if (districts && districts.length) html += `<div style="font-size:0.7rem;margin-top:4px">Enriched districts loaded: ${districts.length}</div>`;
       panel.innerHTML = html;
     }
 
-    // Seed data - real info as of June 2026 (manually seeded + scraper assisted)
-    // Enhanced model for funding deep-dive.
-    // Full automation + agent verification in progress.
-    const districts = [
-      // === SARASOTA COUNTY COMMISSION (FUNDING DEEP DIVE PRIORITY) ===
-      {
-        id: "sarasota-cc-d2",
-        type: "county",
-        name: "Sarasota County Commission District 2",
-        jurisdiction: "Sarasota County",
-        incumbent: {
-          name: "Mark Smith",
-          elected: "2022",
-          termEnds: "2026",
-          notes: "Architect, Siesta Key resident. First term. Vice Chair."
-        },
-        election: {
-          primary: "Aug 18, 2026",
-          general: "Nov 3, 2026"
-        },
-        candidates: [
-          {
-            name: "Mark Smith",
-            isIncumbent: true,
-            status: "Incumbent (Republican primary)",
-            funding: "Development & business interests visible; raised ~2x challenger",
-            financeLink: "https://www.sarasotavotes.gov/196/Financial-Reporting-for-Candidates-Commi",
-            topContributors: [
-              { name: "Jensen (Lakewood Ranch developer) - $9k in 2022 cycle", category: "Real Estate/Development" },
-              { name: "Local development interests ~$53k (2022)", category: "Real Estate/Development" },
-              { name: "Business PACs / local donors", category: "Business PACs" }
-            ],
-            fundingCategories: ["Real Estate/Development", "Business PACs"],
-            limitFlags: []
-          },
-          {
-            name: "Kristina Sargent (and others in primary context)",
-            isIncumbent: false,
-            status: "Challenger(s) - primary dynamics",
-            funding: "TBD - monitor official filings (reported fundraising noted in coverage)",
-            financeLink: "https://www.sarasotavotes.gov/",
-            topContributors: [],
-            fundingCategories: [],
-            limitFlags: []
-          }
-        ],
-        fundingNotes: "Siesta Key focus: Smith is long-time Siesta Key architect/business leader (Smith Architects in Village). History of dev funding but claims opposition to major Siesta hotels (requires supermajority). 2022: $53k+ from dev interests incl $9k Jensen. Budget up 71% on his watch. Suspicious vote against rescinding $7.5M to Jon Mast (critics allege conflicts). Outraised challenger Sargent 2x. Siesta Key community ties: past SKVA President, Chamber roles. Specific: active in SKA, SKVA beautification.",
-        sources: ["https://www.sarasotavotes.gov/181/Offices-up-for-Election", "https://www.scgov.net/government/county-commission-bcc", "Suncoast Searchlight, WUSF, Herald-Tribune 2022-2026", "Siesta Sand, local reports on community plan"],
-        color: "#ef4444"
-      },
-      {
-        id: "sarasota-cc-d4",
-        type: "county",
-        name: "Sarasota County Commission District 4",
-        jurisdiction: "Sarasota County",
-        incumbent: {
-          name: "Dr. Joe Neunder",
-          elected: "2022",
-          termEnds: "2026"
-        },
-        election: {
-          primary: "Aug 18, 2026",
-          general: "Nov 3, 2026"
-        },
-        candidates: [
-          {
-            name: "Dr. Joe Neunder",
-            isIncumbent: true,
-            status: "Incumbent",
-            funding: "Significant developer support via committees (~20% in 2022)",
-            financeLink: "https://www.sarasotavotes.gov/",
-            topContributors: [
-              { name: "Pat Neal - $10k (via pro-Neunder committee)", category: "Real Estate/Development" },
-              { name: "Rex Jensen, Hugh Culverhouse, Randy Benderson - $95k total to committee", category: "Real Estate/Development" },
-              { name: "Chris Brown network LLCs - multiple $1k post-vote (e.g. Siesta Key Summer House)", category: "Real Estate/Development" }
-            ],
-            fundingCategories: ["Real Estate/Development", "Business PACs"],
-            limitFlags: ["Post-vote contributions from developers tied to approved projects - review timing in filings"]
-          },
-          {
-            name: "Jim DeNiro",
-            isIncumbent: false,
-            status: "Challenger (Republican primary)",
-            funding: "TBD",
-            financeLink: "https://www.sarasotavotes.gov/",
-            topContributors: [],
-            fundingCategories: [],
-            limitFlags: []
-          }
-        ],
-        fundingNotes: "Developer money shadows 'controlled growth' pitch. Pro-Neunder PAC 'Conservatives for a Brighter Future' got $95k from Pat Neal, Hugh Culverhouse, Randy Benderson, Rex Jensen. $10k from Pat Neal to PAC. Post-vote Siesta Key hotel/restaurant network (Chris Brown LLCs: Siesta Key Summer House, Ocean Blvd etc.) gave $7k before + $9k after waterfront property deal; refunded $4k. 2022 ~20% from devs. Land-use attorneys contributed. Siesta Key hotel operators in mix. Critics: symbol of SWFL political distrust.",
-        sources: ["https://floridapolitics.com (2026 articles on receipts)", "Herald-Tribune Dec 2022", "sarasotanewsleader", "scgov.net"],
-        color: "#ef4444"
-      },
-
-      // === MANATEE COUNTY COMMISSION (FUNDING DEEP DIVE PRIORITY) ===
-      {
-        id: "manatee-cc-d2",
-        type: "county",
-        name: "Manatee County Commission District 2",
-        jurisdiction: "Manatee County",
-        incumbent: {
-          name: "Amanda Ballard",
-          notes: "Incumbent seeking re-election"
-        },
-        election: {
-          primary: "Aug 18, 2026",
-          general: "Nov 3, 2026"
-        },
-        candidates: [
-          {
-            name: "Amanda Ballard",
-            isIncumbent: true,
-            status: "Incumbent (up for re-election)",
-            funding: "Monitor development / PAC money",
-            financeLink: "https://www.votemanatee.gov/",
-            topContributors: [
-              { name: "Various PACs & local business (monitor filings)", category: "Business PACs" }
-            ],
-            fundingCategories: ["Business PACs", "Political"],
-            limitFlags: []
-          }
-        ],
-        fundingNotes: "Seat up. Watch crowded fields and developer interests on growth policy.",
-        sources: ["https://www.votemanatee.gov/offices-up-for-election/", "Manatee County BOCC site"],
-        color: "#ef4444"
-      },
-      {
-        id: "manatee-cc-d6",
-        type: "county",
-        name: "Manatee County Commission District 6 (At-Large)",
-        jurisdiction: "Manatee County",
-        incumbent: {
-          name: "Jason Bearden",
-          notes: "Not seeking re-election — OPEN SEAT (high money potential)"
-        },
-        election: {
-          primary: "Aug 18, 2026",
-          general: "Nov 3, 2026"
-        },
-        candidates: [
-          {
-            name: "Multiple Republicans filed",
-            isIncumbent: false,
-            status: "Crowded field (no incumbent)",
-            funding: "High interest from business & development donors likely",
-            financeLink: "https://www.votemanatee.gov/",
-            topContributors: [
-              { name: "Business & development interests expected (watch filings)", category: "Real Estate/Development" }
-            ],
-            fundingCategories: ["Real Estate/Development", "Business PACs"],
-            limitFlags: ["Open seat often attracts heavy outside spending - review reports closely"]
-          }
-        ],
-        fundingNotes: "Open at-large = high money race. Priority for developer influence tracking on marshlands/growth.",
-        sources: ["https://www.votemanatee.gov/", "Local reporting Jan 2026"],
-        color: "#f59e0b"
-      },
-
-      // === CITY SEATS (seeded examples) ===
-      {
-        id: "sarasota-city-atlarge",
-        type: "city",
-        name: "City of Sarasota - At-Large Seats (2 seats)",
-        jurisdiction: "City of Sarasota",
-        incumbent: {
-          name: "Multiple (Jen Ahearn-Koch is one sitting At-Large Commissioner)",
-          notes: "City uses 2 at-large + 3 district seats. Non-partisan."
-        },
-        election: {
-          primary: "Aug 18, 2026",
-          general: "Nov 3, 2026"
-        },
-        candidates: [
-          { name: "Jen Ahearn-Koch", isIncumbent: true, status: "Incumbent (qualified)", funding: "Public records via city portal", financeLink: "https://www.sarasotafl.gov/" },
-          { name: "Flo Entler", isIncumbent: false, status: "Qualified", funding: "TBD" },
-          { name: "Rob Rominiecki", isIncumbent: false, status: "Qualified", funding: "TBD" },
-          { name: "John Harshman", isIncumbent: false, status: "Qualified", funding: "TBD" },
-          { name: "Yevgeny Khodorkovsky", isIncumbent: false, status: "Qualified", funding: "TBD" }
-        ],
-        fundingNotes: "Five qualified for two seats (mid-June 2026).",
-        sources: ["https://www.sarasotafl.gov/Department-Pages/City-Auditor-and-Clerk/Elections/General-Elections-Candidates-2026"],
-        color: "#3b82f6"
-      },
-
-      // === MANATEE SCHOOL BOARD (NEW SEED) ===
-      {
-        id: "manatee-sb-d2",
-        type: "school",
-        name: "Manatee County School Board District 2",
-        jurisdiction: "Manatee County",
-        incumbent: {
-          name: "Cindy Spray",
-          notes: "Incumbent (recent Vice Chair references). Seat up 2026."
-        },
-        election: {
-          primary: "Aug 18, 2026",
-          general: "Nov 3, 2026"
-        },
-        candidates: [
-          { name: "Cindy Spray (incumbent)", isIncumbent: true, status: "Incumbent (up)", funding: "Monitor local education-related donors", financeLink: "https://www.votemanatee.gov/" },
-          { name: "James Golden", isIncumbent: false, status: "Qualified", funding: "TBD" },
-          { name: "JT White", isIncumbent: false, status: "Qualified", funding: "TBD" },
-          { name: "Sharon Jefferson", isIncumbent: false, status: "Qualified", funding: "TBD" },
-          { name: "Margi Nanney", isIncumbent: false, status: "Qualified", funding: "TBD" }
-        ],
-        fundingNotes: "School board races can attract targeted PAC/interest money. Watch for development or education policy influence. Local business/parent groups often involved.",
-        sources: ["https://www.votemanatee.gov/offices-up-for-election/", "https://www.manateeschools.net/", "thebradentontimes.com post-qualifying"],
-        color: "#8b5cf6"
-      },
-      {
-        id: "manatee-sb-d4",
-        type: "school",
-        name: "Manatee County School Board District 4",
-        jurisdiction: "Manatee County",
-        incumbent: {
-          name: "Wesley 'Chad' Choate (often listed as Chad Choate)",
-          notes: "Incumbent (appointed 2021, elected 2022). Seat up."
-        },
-        election: {
-          primary: "Aug 18, 2026",
-          general: "Nov 3, 2026"
-        },
-        candidates: [
-          { name: "Wesley 'Chad' Choate", isIncumbent: true, status: "Incumbent (up)", funding: "TBD - review filings" }
-        ],
-        fundingNotes: "Typical school board funding patterns; watch for any large single-interest donations.",
-        sources: ["https://www.votemanatee.gov/", "manateeschools.net", "Ballotpedia"],
-        color: "#8b5cf6"
-      },
-      {
-        id: "manatee-sb-d5",
-        type: "school",
-        name: "Manatee County School Board District 5",
-        jurisdiction: "Manatee County",
-        incumbent: {
-          name: "Richard Tatem (appointed Nov 2024; did NOT seek re-election)",
-          notes: "OPEN SEAT. Term expires 2026 but incumbent not running."
-        },
-        election: {
-          primary: "Aug 18, 2026",
-          general: "Nov 3, 2026"
-        },
-        candidates: [
-          { name: "Camden Bedinghaus", isIncumbent: false, status: "Qualified", funding: "TBD" },
-          { name: "Jonathan Mullis", isIncumbent: false, status: "Qualified", funding: "TBD" },
-          { name: "Chantal Wilford", isIncumbent: false, status: "Qualified", funding: "TBD" }
-        ],
-        fundingNotes: "Open seat (no incumbent candidate). Multiple candidates reported. Watch for education/interest group funding.",
-        sources: ["https://www.votemanatee.gov/offices-up-for-election/", "thebradentontimes.com", "local forums June 2026"],
-        color: "#8b5cf6"
-      },
-
-      // === SARASOTA SCHOOL BOARD (NEW SEED) ===
-      {
-        id: "sarasota-sb",
-        type: "school",
-        name: "Sarasota County School Board Districts 1, 4 and 5",
-        jurisdiction: "Sarasota County",
-        incumbent: {
-          name: "Multiple seats up (see SOE for details)",
-          notes: "Three of five seats up."
-        },
-        election: {
-          primary: "Aug 18, 2026",
-          general: "Nov 3, 2026"
-        },
-        candidates: [
-          { name: "Candidates to be confirmed via qualifying", isIncumbent: false, status: "Check sarasotavotes.gov", funding: "TBD" }
-        ],
-        fundingNotes: "School board funding can include education PACs and local interests. Review filings closely.",
-        sources: ["https://www.sarasotavotes.gov/181/Offices-up-for-Election"],
-        color: "#8b5cf6"
-      },
-
-      // === ADDITIONAL CITY SEATS (examples) ===
-      {
-        id: "manatee-bradenton-wards",
-        type: "city",
-        name: "City of Bradenton - City Council Wards 2, 3, 4",
-        jurisdiction: "Manatee County (City of Bradenton)",
-        incumbent: { name: "Ward-specific (verify current holders)", notes: "Wards up in 2026 general." },
-        election: { primary: "Aug 18, 2026", general: "Nov 3, 2026" },
-        candidates: [{ name: "Multiple per ward - check votemanatee", isIncumbent: false, status: "Qualifying closed June 2026", funding: "TBD" }],
-        fundingNotes: "Municipal races: watch local business / development donors.",
-        sources: ["https://www.votemanatee.gov/offices-up-for-election/"],
-        color: "#3b82f6"
-      },
-
-      // === STATEWIDE: HEAVY FOCUS - GOVERNOR 2026 ===
-      {
-        id: "fl-governor-2026",
-        type: "statewide",
-        name: "Florida Governor 2026 (Statewide - Local Impact on Growth & Marshlands)",
-        jurisdiction: "State of Florida",
-        incumbent: { name: "Open seat (Ron DeSantis term-limited)", notes: "Major impact on local development, taxes, environment, budget. Affects Sarasota/Manatee growth policies." },
-        election: { primary: "Aug 18, 2026", general: "Nov 3, 2026" },
-        candidates: [
-          {
-            name: "Byron Donalds (R frontrunner, Trump endorsed)",
-            isIncumbent: false,
-            status: "Leading GOP primary (Trump-backed)",
-            funding: "~$81M+ total raised (campaign + PACs as of mid-2026 reports); massive war chest from national GOP, business & donors",
-            financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
-            topContributors: [
-              { name: "Jeff Yass - $2.5M", category: "Individual / Business" },
-              { name: "Club for Growth - $2.5M", category: "Political PACs" },
-              { name: "Seminole Tribe of Florida - $1M", category: "Business" },
-              { name: "Steve Wynn - $1M", category: "Individual / Business" },
-              { name: "Florida Chamber of Commerce PAC and other business groups", category: "Business / Political" }
-            ],
-            fundingCategories: ["Business", "Political PACs", "National GOP"],
-            limitFlags: []
-          },
-          {
-            name: "James Fishback (R - Gen Z / grassroots challenger)",
-            isIncumbent: false,
-            status: "Crowd favorite, polling underdog but rising",
-            funding: "Lower than Donalds; relies on small donors and events",
-            financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
-            topContributors: [
-              { name: "Small-dollar donors & online grassroots (hundreds of individual contributions under $200 via events/crowdfunding)", category: "Individuals" },
-              { name: "Limited large PACs; focus on self/small network per early filings (e.g., event-based from supporters)", category: "Grassroots" }
-            ],
-            fundingCategories: ["Grassroots / Small Donors"],
-            limitFlags: []
-          },
-          {
-            name: "Jay Collins (R - Lt. Governor)",
-            isIncumbent: false,
-            status: "GOP primary contender",
-            funding: "Moderate, establishment support",
-            financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
-            topContributors: [],
-            fundingCategories: ["Political / Establishment"],
-            limitFlags: []
-          },
-          {
-            name: "Paul Renner (R - former House Speaker)",
-            isIncumbent: false,
-            status: "GOP primary contender (establishment/legislative record)",
-            funding: "Moderate",
-            financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
-            topContributors: [],
-            fundingCategories: ["Political"],
-            limitFlags: []
-          },
-          {
-            name: "David Jolly (D leading contender)",
-            isIncumbent: false,
-            status: "Leading Dem in general election polling",
-            funding: "Lower profile than GOP frontrunners",
-            financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
-            topContributors: [],
-            fundingCategories: [],
-            limitFlags: []
-          },
-          {
-            name: "Jerry Demings (D - Orange County Mayor)",
-            isIncumbent: false,
-            status: "Dem primary contender",
-            funding: "Local government ties",
-            financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
-            topContributors: [],
-            fundingCategories: [],
-            limitFlags: []
-          }
-        ],
-        keyIssues: [
-          { issue: "Development & Growth", stance: "Donalds: pro-business growth, limited regs; Fishback: more skeptical of sprawl, pro-local control" },
-          { issue: "Environment / Marshlands", stance: "Governor sets tone via DEP/FDEP appointments, budget, veto power on growth bills impacting Sarasota/Manatee wetlands (e.g. Myakka, coastal buffers)" },
-          { issue: "Taxes & Budget", stance: "State budget and tax policy directly hits local infrastructure, schools, services funding" },
-          { issue: "Fishback vs Establishment", stance: "Fishback: anti-establishment, youth turnout, events over ads; Donalds: traditional GOP machine + Trump" }
-        ],
-        fundingNotes: "Statewide race with massive local stakes for Sarasota/Manatee growth and marshlands. Donalds has overwhelming fundraising advantage (~$81M+ total raised via campaign + PACs as of mid-2026 reports; Q1 record $22M+, ~$65M+ cash on hand). Fishback emphasizes grassroots and has drawn large crowds (e.g. Merritt Island library standing-room only, mostly young; UCF events with hundreds). Polling vs Reality: Mainstream polls (AIF June 2026: ~54% Donalds/8% Fishback/5% Collins/2% Renner/31% undecided; Emerson April: 46% Donalds/4% Fishback/4% Collins/39% undecided) show big Donalds lead. HOWEVER: Fishback's events and small-donor metrics suggest stronger support among Gen Z/young voters and independents; crowds/turnout often outperform polls. HEAVY SKEPTICISM ON ALL POLLING — mainstream polls have been unreliable historically in FL races; cross-check with finance filings (dos.fl.gov), event size, small-dollar diversity, and local sentiment. No poll worship.",
-        pollingSources: "AIF June 2026 (floridapolitics.com/archives/801165), Emerson College April 2026, Change Research, Florida Today (Merritt Island crowds May 2026), Ballotpedia",
-        sources: ["https://ballotpedia.org/Florida_gubernatorial_and_lieutenant_gubernatorial_election,_2026", "https://floridapolitics.com/archives/801165-aif-poll-shows-byron-donalds-leading-gop-primary-by-46-points/", "https://emersoncollegepolling.com/florida-2026-poll-donalds-leads-gop-primary-for-governor-republicans-outpace-democrats-in-florida-elections/", "https://www.floridatoday.com/story/news/2026/05/12/fishback-draws-crowds-on-merritt-island/90036062007/", "https://dos.fl.gov/elections/candidates-committees/campaign-finance/"],
-        color: "#10b981"
-      },
-      // === STATEWIDE: HEAVY FOCUS - COMMISSIONER OF AGRICULTURE 2026 (Marshlands/Development Focus) ===
-      {
-        id: "fl-ag-comm-2026",
-        type: "statewide",
-        name: "Florida Commissioner of Agriculture 2026 (Statewide - Marshlands & Ag vs Development)",
-        jurisdiction: "State of Florida",
-        incumbent: { name: "Wilton Simpson (R)", notes: "Incumbent; key player in ag land protection, hemp rules, and balancing development pressure on wetlands/marshlands." },
-        election: { primary: "Aug 18, 2026", general: "Nov 3, 2026" },
-        candidates: [
-          {
-            name: "Wilton Simpson (R incumbent, Trump endorsed)",
-            isIncumbent: true,
-            status: "Seeking re-election",
-            funding: "Strong incumbent + agribusiness support",
-            financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
-            topContributors: [
-              { name: "Florida Farm Bureau PAC and agribusiness groups (major in filings)", category: "Ag / Business" },
-              { name: "Florida Chamber of Commerce PAC ($165k+ reported)", category: "Business / Political" },
-              { name: "Florida Crystals ($100k+ reported)", category: "Business" },
-              { name: "Seminole Tribe of Florida (~$500k reported)", category: "Business" },
-              { name: "Trump-aligned donors and GOP infrastructure", category: "Political PACs" }
-            ],
-            fundingCategories: ["Agribusiness", "Business PACs"],
-            limitFlags: []
-          },
-          {
-            name: "Matt 'The Welder' Taylor (Matt Taylor) (R primary challenger)",
-            isIncumbent: false,
-            status: "GOP primary challenger (populist/welder persona)",
-            funding: "Lower profile, grassroots appeal",
-            financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
-            topContributors: [],
-            fundingCategories: [],
-            limitFlags: []
-          },
-          {
-            name: "Richard Olle (R primary challenger)",
-            isIncumbent: false,
-            status: "GOP primary challenger (low-profile)",
-            funding: "Minimal reported",
-            financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
-            topContributors: [],
-            fundingCategories: [],
-            limitFlags: []
-          },
-          {
-            name: "Joey Atkins (D primary)",
-            isIncumbent: false,
-            status: "Dem primary contender",
-            funding: "TBD",
-            financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
-            topContributors: [],
-            fundingCategories: [],
-            limitFlags: []
-          },
-          {
-            name: "Donald Prichard (D primary)",
-            isIncumbent: false,
-            status: "Dem primary contender",
-            funding: "TBD",
-            financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
-            topContributors: [],
-            fundingCategories: [],
-            limitFlags: []
-          },
-          {
-            name: "Kyle Gibson (NPA general)",
-            isIncumbent: false,
-            status: "No Party Affiliation general election candidate",
-            funding: "TBD",
-            financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
-            topContributors: [],
-            fundingCategories: [],
-            limitFlags: []
-          }
-        ],
-        keyIssues: [
-          { issue: "Marshlands / Wetlands Protection", stance: "Simpson: 2026 Farm Bill + Rural Lands easements (100k+ acres protected, e.g. Charlie Creek Marsh) guard ag land/marsh buffers from sprawl; FDACS role in ag/water policy. Critics: some conservation provisions, not aggressive enough vs dev pressure in Sarasota/Manatee" },
-          { issue: "Hemp / Cannabis Regulation", stance: "Focus on 'guardrails' and cracking down on intoxicating products (7-OH, etc.)" },
-          { issue: "Ag Land vs Development", stance: "Core tension for local: preserving farmland/wetlands (Myakka, etc.) or allowing growth/building" }
-        ],
-        fundingNotes: "Critical local impact: FDACS policies on ag land preservation (Rural & Family Lands Protection Program easements) directly affect Sarasota/Manatee marshlands/rural buffers vs developer pressure. Simpson (5th-gen farmer, Trump-endorsed): 2026 Florida Farm Bill (his priority, signed Mar 2026) protects rural/conservation lands from high-density dev (unanimous local approval required); preserved 100k+ acres via easements (e.g. marsh areas). Voting record excerpts: Supported the Farm Bill with provisions for ag land protection and hemp guardrails; backed rural economic development bills. Primary challengers: Matt 'The Welder' Taylor (outsider, populist) and Richard Olle (low-profile). Dems Joey Atkins, Donald Prichard; NPA Kyle Gibson. Agribusiness/lobbyist funding common — watch development interests on land-use. Heavy focus for marshlands transparency. Simpson's agribusiness ties vs challengers' outsider appeal.",
-        sources: ["https://ballotpedia.org/Florida_Agriculture_Commissioner_election,_2026", "https://www.fdacs.gov/", "https://floridapolitics.com/archives/793155-simpson-seeks-second-term/", "https://en.wikipedia.org/wiki/2026_Florida_Commissioner_of_Agriculture_election", "local reporting on 2026 Farm Bill & Rural Lands easements (e.g. Charlie Creek Marsh)"],
-        color: "#10b981"
-      }
-    ];
-
+    // Bootstrap: load both JSON sources then initialize layers + first render.
+    // (Arch/Tech change - data externalized; works best via python -m http.server)
     let currentLayerGroup = L.layerGroup().addTo(map);
+
+    async function initializeAfterLoad() {
+      // Ensure data is populated (in case called early)
+      if (!districts || districts.length === 0) {
+        await loadEnrichedDistricts();
+      }
+      // Initial render (skip statewide - they have no map polygons)
+      districts.forEach(d => {
+        if (d.type !== 'statewide') renderDistrict(d);
+      });
+
+      // Demo: show first district on load
+      setTimeout(() => {
+        if (districts && districts.length > 0) {
+          showDistrictDetails(districts[0]);
+        }
+      }, 1200);
+
+      console.log('%c[knowyourdistricts.fl] Data loaded from JSON. Real GeoJSON + full pipeline next.', 'color:#64748b');
+    }
+
+    // Start async loads (fire and schedule init)
+    loadScraperJSON();
+    loadEnrichedDistricts().then(() => {
+      // small delay so map is ready
+      setTimeout(initializeAfterLoad, 50);
+    }).catch(() => {
+      // still try
+      setTimeout(initializeAfterLoad, 100);
+    });
 
     function renderDistrict(district) {
       // Very rough approximate polygons for demo (replace with real GeoJSON later)
@@ -785,13 +373,19 @@
     }
 
     function filterLayer(type) {
-      // Simple filter demo
+      // Simple filter (uses dynamically loaded districts)
       document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
       const btnId = type === 'all' ? 'filter-all' : `filter-${type}`;
       const btn = document.getElementById(btnId);
       if (btn) btn.classList.add('active');
 
       currentLayerGroup.clearLayers();
+
+      if (!districts || districts.length === 0) {
+        // try reload if empty (e.g. late click)
+        loadEnrichedDistricts().then(() => filterLayer(type));
+        return;
+      }
 
       districts.forEach(d => {
         if (type === 'all' || d.type === type) {
@@ -854,17 +448,8 @@
       }
     }
 
-    // Initial render (skip statewide - they have no map polygons)
-    districts.forEach(d => {
-      if (d.type !== 'statewide') renderDistrict(d);
-    });
-
-    // Demo: show first district on load
-    setTimeout(() => {
-      showDistrictDetails(districts[0]);
-    }, 1200);
-
-    console.log('%c[knowyourdistricts.fl] Starter loaded. Real GeoJSON + full data pipeline coming next.', 'color:#64748b');
+    // Initial render + demo now handled in initializeAfterLoad() after JSON loads complete.
+    // (old immediate execution removed during Arch/Tech JSON extraction)
   </script>
 </body>
 </html>

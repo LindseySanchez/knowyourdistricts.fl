@@ -2,7 +2,7 @@
   "meta": {
     "project": "knowyourdistricts.fl",
     "date": "2026-06-19",
-    "note": "Expanded manual seed + enhanced funding model (local + statewide). Scraper output in offices_up_*.json. Use for site data layer. All entries require agent + human accuracy review against official sources. Statewide rich data seeded in index.html; sync to JSON for maintainability.",
+    "note": "Legacy partial seed. Full authoritative enriched data (incl. all donors, statewide heavy focus, skepticism notes, Olle, keyIssues) now in districts_enriched_2026-06-19.json loaded by the site. Scraper in offices_up_*.json. See PLAN.md.",
     "disclaimer": "Informational only. Verify at sarasotavotes.gov, votemanatee.gov, and county finance portals."
   },
   "districts": [

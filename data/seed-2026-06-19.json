@@ -2,7 +2,7 @@
   "meta": {
     "project": "knowyourdistricts.fl",
     "date": "2026-06-19",
-    "note": "Early manual seed from official sources. Will be replaced by automated pipeline + agent verification.",
+    "note": "Early minimal seed. Primary enriched data now lives in districts_enriched_2026-06-19.json (full candidates/funding/keyIssues/statewide). This seed kept for reference. See PLAN.md for status.",
     "disclaimer": "This is not official. Verify at source links. Polling skepticism required."
   },
   "districts": [
