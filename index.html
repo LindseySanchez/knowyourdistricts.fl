@@ -141,12 +141,16 @@
     <div class="sidebar">
       <h2>🗳️ 2026 Elections — Focus Area</h2>
       
+      <div style="background:#064e3b; color:#a7f3d0; padding:4px 8px; margin-bottom:6px; border-radius:4px; font-size:0.8rem; border-left:4px solid #10b981;">
+        <strong>🔥 HEAVY FOCUS:</strong> Click "Statewide (Gov + Ag)" for expanded Governor & Ag Comm details (marshlands, Fishback crowds vs polls, funding transparency). Data seeded June 2026 — verify sources.
+      </div>
       <div class="filters">
         <button onclick="filterLayer('all')" class="active" id="filter-all">All</button>
         <button onclick="filterLayer('county')" id="filter-county">County Comm</button>
         <button onclick="filterLayer('city')" id="filter-city">City</button>
         <button onclick="filterLayer('school')" id="filter-school">School Board</button>
-        <button onclick="filterLayer('statewide')" id="filter-statewide">Statewide (Gov + Ag)</button>
+        <button onclick="filterLayer('statewide')" id="filter-statewide">Statewide (Gov + Ag) 🔥</button>
+        <button onclick="showScraperList()" id="filter-scraper">All from Scraper (JSON)</button>
       </div>
 
       <div id="selection-panel">
@@ -155,7 +159,7 @@
 
       <div class="disclaimer">
         <strong>Important:</strong> This is informational only. Verify everything at official sources (SarasotaVotes.gov, VoteManatee.gov, county sites). 
-        Polling data (when shown) comes with strong skepticism — mainstream polls have been consistently unreliable.
+        Polling data (when shown) comes with strong skepticism — mainstream polls have been consistently unreliable. For 2026 Gov: always cross-check AIF/Emerson numbers against crowds, small-dollar fundraising & primary finance records.
         Funding data is from public campaign finance records. Patterns of large development money or potential limit workarounds are highlighted when visible.
       </div>
 
@@ -177,6 +181,40 @@
       attribution: '&copy; OpenStreetMap contributors',
       className: 'map-tiles'
     }).addTo(map);
+
+    // Load the offices-up JSON files from the scraper (for dynamic "offices up" lists; enriched candidate details are seeded in the districts array)
+    async function loadScraperJSON() {
+      try {
+        const [sarasotaResp, manateeResp] = await Promise.all([
+          fetch('data/offices_up_sarasota_2026-06-19.json'),
+          fetch('data/offices_up_manatee_2026-06-19.json')
+        ]);
+        const sarasotaData = await sarasotaResp.json();
+        const manateeData = await manateeResp.json();
+        console.log('Scraper JSON loaded successfully');
+        console.log('Sarasota offices up:', sarasotaData.offices ? sarasotaData.offices.length : 0);
+        console.log('Manatee offices up:', manateeData.offices ? manateeData.offices.length : 0);
+        window.loadedOffices = { sarasota: sarasotaData, manatee: manateeData };
+      } catch (e) {
+        console.log('Note: For full JSON loading in browser, run "python -m http.server" in this folder and visit http://localhost:8000 . Data fetch works best over HTTP.');
+      }
+    }
+    loadScraperJSON();
+
+    function showScraperList() {
+      if (!window.loadedOffices) {
+        alert('Scraper JSON not loaded yet. Check console or run a local server.');
+        return;
+      }
+      const panel = document.getElementById('selection-panel');
+      let html = '<div class="district-info"><strong>All Offices Up from Scraper JSON</strong><br><small>Loaded dynamically</small></div>';
+      const all = [...(window.loadedOffices.sarasota.offices || []), ...(window.loadedOffices.manatee.offices || [])];
+      all.slice(0, 20).forEach(o => {  // limit for demo
+        html += `<div class="candidate"><strong>${o.description}</strong> <small>(${o.section} - ${o.office_type})</small></div>`;
+      });
+      if (all.length > 20) html += `<div><small>... and ${all.length - 20} more. See JSON files.</small></div>`;
+      panel.innerHTML = html;
+    }
 
     // Seed data - real info as of June 2026 (manually seeded + scraper assisted)
     // Enhanced model for funding deep-dive.
@@ -224,7 +262,7 @@
             limitFlags: []
           }
         ],
-        fundingNotes: "Siesta Key focus: Smith is long-time Siesta Key architect/business leader (Smith Architects in Village). History of dev funding but claims opposition to major Siesta hotels (requires supermajority). 2022: $53k+ from dev interests incl $9k Jensen. Budget up 71% on his watch. Suspicious vote against rescinding $7.5M to Jon Mast (critics allege conflicts). Outraised challenger Sargent 2x. Siesta Key community ties: past SKVA President, Chamber roles.",
+        fundingNotes: "Siesta Key focus: Smith is long-time Siesta Key architect/business leader (Smith Architects in Village). History of dev funding but claims opposition to major Siesta hotels (requires supermajority). 2022: $53k+ from dev interests incl $9k Jensen. Budget up 71% on his watch. Suspicious vote against rescinding $7.5M to Jon Mast (critics allege conflicts). Outraised challenger Sargent 2x. Siesta Key community ties: past SKVA President, Chamber roles. Specific: active in SKA, SKVA beautification.",
         sources: ["https://www.sarasotavotes.gov/181/Offices-up-for-Election", "https://www.scgov.net/government/county-commission-bcc", "Suncoast Searchlight, WUSF, Herald-Tribune 2022-2026", "Siesta Sand, local reports on community plan"],
         color: "#ef4444"
       },
@@ -384,7 +422,7 @@
           { name: "Sharon Jefferson", isIncumbent: false, status: "Qualified", funding: "TBD" },
           { name: "Margi Nanney", isIncumbent: false, status: "Qualified", funding: "TBD" }
         ],
-        fundingNotes: "School board races can attract targeted PAC/interest money. Watch for development or education policy influence.",
+        fundingNotes: "School board races can attract targeted PAC/interest money. Watch for development or education policy influence. Local business/parent groups often involved.",
         sources: ["https://www.votemanatee.gov/offices-up-for-election/", "https://www.manateeschools.net/", "thebradentontimes.com post-qualifying"],
         color: "#8b5cf6"
       },
@@ -467,85 +505,179 @@
         color: "#3b82f6"
       },
 
-      // === STATEWIDE: GOVERNOR + AG COMMISSIONER (STARTED) ===
+      // === STATEWIDE: HEAVY FOCUS - GOVERNOR 2026 ===
       {
         id: "fl-governor-2026",
         type: "statewide",
-        name: "Florida Governor 2026 (Statewide - Local Impact)",
+        name: "Florida Governor 2026 (Statewide - Local Impact on Growth & Marshlands)",
         jurisdiction: "State of Florida",
-        incumbent: { name: "Open seat (Ron DeSantis term-limited)", notes: "Huge local impact on growth, environment, budget." },
+        incumbent: { name: "Open seat (Ron DeSantis term-limited)", notes: "Major impact on local development, taxes, environment, budget. Affects Sarasota/Manatee growth policies." },
         election: { primary: "Aug 18, 2026", general: "Nov 3, 2026" },
         candidates: [
           {
             name: "Byron Donalds (R frontrunner, Trump endorsed)",
             isIncumbent: false,
-            status: "Leading GOP primary",
-            funding: "Over $7M raised (as of early 2026)",
+            status: "Leading GOP primary (Trump-backed)",
+            funding: "~$81M+ total raised (campaign + PACs as of mid-2026 reports); massive war chest from national GOP, business & donors",
             financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
             topContributors: [
-              { name: "Major Republican donors, business interests", category: "Business / Political" }
+              { name: "Jeff Yass - $2.5M", category: "Individual / Business" },
+              { name: "Club for Growth - $2.5M", category: "Political PACs" },
+              { name: "Seminole Tribe of Florida - $1M", category: "Business" },
+              { name: "Steve Wynn - $1M", category: "Individual / Business" },
+              { name: "Florida Chamber of Commerce PAC and other business groups", category: "Business / Political" }
             ],
-            fundingCategories: ["Business", "Political PACs"],
+            fundingCategories: ["Business", "Political PACs", "National GOP"],
             limitFlags: []
           },
           {
-            name: "David Jolly (D) / Jerry Demings (D)",
+            name: "James Fishback (R - Gen Z / grassroots challenger)",
             isIncumbent: false,
-            status: "Leading Dem contenders",
-            funding: "Lower than GOP frontrunners",
-            financeLink: "",
+            status: "Crowd favorite, polling underdog but rising",
+            funding: "Lower than Donalds; relies on small donors and events",
+            financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
+            topContributors: [
+              { name: "Small-dollar donors & online grassroots (hundreds of individual contributions under $200 via events/crowdfunding)", category: "Individuals" },
+              { name: "Limited large PACs; focus on self/small network per early filings (e.g., event-based from supporters)", category: "Grassroots" }
+            ],
+            fundingCategories: ["Grassroots / Small Donors"],
+            limitFlags: []
+          },
+          {
+            name: "Jay Collins (R - Lt. Governor)",
+            isIncumbent: false,
+            status: "GOP primary contender",
+            funding: "Moderate, establishment support",
+            financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
+            topContributors: [],
+            fundingCategories: ["Political / Establishment"],
+            limitFlags: []
+          },
+          {
+            name: "Paul Renner (R - former House Speaker)",
+            isIncumbent: false,
+            status: "GOP primary contender (establishment/legislative record)",
+            funding: "Moderate",
+            financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
+            topContributors: [],
+            fundingCategories: ["Political"],
+            limitFlags: []
+          },
+          {
+            name: "David Jolly (D leading contender)",
+            isIncumbent: false,
+            status: "Leading Dem in general election polling",
+            funding: "Lower profile than GOP frontrunners",
+            financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
+            topContributors: [],
+            fundingCategories: [],
+            limitFlags: []
+          },
+          {
+            name: "Jerry Demings (D - Orange County Mayor)",
+            isIncumbent: false,
+            status: "Dem primary contender",
+            funding: "Local government ties",
+            financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
             topContributors: [],
             fundingCategories: [],
             limitFlags: []
           }
         ],
-        fundingNotes: "Statewide but affects local development, taxes, marshlands policy. Polling: Mainstream (AIF, Emerson) show Donalds large lead (46-54% GOP primary). HOWEVER: James Fishback's internal/alternative polls show much stronger support; he draws HUGE crowds (esp. young/Gen Z) wherever he goes vs Byron — suggesting mainstream 'GOP verified' polls may undercount grassroots energy or use methodology that misses turnout. Cross-check with event size, not just polls. Heavy skepticism on all polling per project standards.",
-        sources: ["https://ballotpedia.org/Florida_gubernatorial_and_lieutenant_gubernatorial_election,_2026", "AIF/Emerson polls, Change Research, Floridapolitics reports on Fishback crowds/debates 2026", "fundraising reports"],
+        keyIssues: [
+          { issue: "Development & Growth", stance: "Donalds: pro-business growth, limited regs; Fishback: more skeptical of sprawl, pro-local control" },
+          { issue: "Environment / Marshlands", stance: "Governor sets tone via DEP/FDEP appointments, budget, veto power on growth bills impacting Sarasota/Manatee wetlands (e.g. Myakka, coastal buffers)" },
+          { issue: "Taxes & Budget", stance: "State budget and tax policy directly hits local infrastructure, schools, services funding" },
+          { issue: "Fishback vs Establishment", stance: "Fishback: anti-establishment, youth turnout, events over ads; Donalds: traditional GOP machine + Trump" }
+        ],
+        fundingNotes: "Statewide race with massive local stakes for Sarasota/Manatee growth and marshlands. Donalds has overwhelming fundraising advantage (~$81M+ total raised via campaign + PACs as of mid-2026 reports; Q1 record $22M+, ~$65M+ cash on hand). Fishback emphasizes grassroots and has drawn large crowds (e.g. Merritt Island library standing-room only, mostly young; UCF events with hundreds). Polling vs Reality: Mainstream polls (AIF June 2026: ~54% Donalds/8% Fishback/5% Collins/2% Renner/31% undecided; Emerson April: 46% Donalds/4% Fishback/4% Collins/39% undecided) show big Donalds lead. HOWEVER: Fishback's events and small-donor metrics suggest stronger support among Gen Z/young voters and independents; crowds/turnout often outperform polls. HEAVY SKEPTICISM ON ALL POLLING — mainstream polls have been unreliable historically in FL races; cross-check with finance filings (dos.fl.gov), event size, small-dollar diversity, and local sentiment. No poll worship.",
+        pollingSources: "AIF June 2026 (floridapolitics.com/archives/801165), Emerson College April 2026, Change Research, Florida Today (Merritt Island crowds May 2026), Ballotpedia",
+        sources: ["https://ballotpedia.org/Florida_gubernatorial_and_lieutenant_gubernatorial_election,_2026", "https://floridapolitics.com/archives/801165-aif-poll-shows-byron-donalds-leading-gop-primary-by-46-points/", "https://emersoncollegepolling.com/florida-2026-poll-donalds-leads-gop-primary-for-governor-republicans-outpace-democrats-in-florida-elections/", "https://www.floridatoday.com/story/news/2026/05/12/fishback-draws-crowds-on-merritt-island/90036062007/", "https://dos.fl.gov/elections/candidates-committees/campaign-finance/"],
         color: "#10b981"
       },
+      // === STATEWIDE: HEAVY FOCUS - COMMISSIONER OF AGRICULTURE 2026 (Marshlands/Development Focus) ===
       {
         id: "fl-ag-comm-2026",
         type: "statewide",
-        name: "Florida Commissioner of Agriculture 2026 (Statewide - Marshlands Focus)",
+        name: "Florida Commissioner of Agriculture 2026 (Statewide - Marshlands & Ag vs Development)",
         jurisdiction: "State of Florida",
-        incumbent: { name: "Wilton Simpson (R)", notes: "Key for ag policy, land use, developer vs wetlands battles." },
+        incumbent: { name: "Wilton Simpson (R)", notes: "Incumbent; key player in ag land protection, hemp rules, and balancing development pressure on wetlands/marshlands." },
         election: { primary: "Aug 18, 2026", general: "Nov 3, 2026" },
         candidates: [
           {
-            name: "Wilton Simpson (R incumbent)",
+            name: "Wilton Simpson (R incumbent, Trump endorsed)",
             isIncumbent: true,
             status: "Seeking re-election",
-            funding: "Strong incumbent fundraising",
+            funding: "Strong incumbent + agribusiness support",
             financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
             topContributors: [
-              { name: "Agribusiness, business PACs", category: "Ag / Business" }
+              { name: "Florida Farm Bureau PAC and agribusiness groups (major in filings)", category: "Ag / Business" },
+              { name: "Florida Chamber of Commerce PAC ($165k+ reported)", category: "Business / Political" },
+              { name: "Florida Crystals ($100k+ reported)", category: "Business" },
+              { name: "Seminole Tribe of Florida (~$500k reported)", category: "Business" },
+              { name: "Trump-aligned donors and GOP infrastructure", category: "Political PACs" }
             ],
             fundingCategories: ["Agribusiness", "Business PACs"],
             limitFlags: []
           },
           {
-            name: "Matt The Welder (Matt Taylor) (R primary)",
+            name: "Matt 'The Welder' Taylor (Matt Taylor) (R primary challenger)",
             isIncumbent: false,
-            status: "GOP primary challenger",
-            funding: "TBD",
-            financeLink: "",
+            status: "GOP primary challenger (populist/welder persona)",
+            funding: "Lower profile, grassroots appeal",
+            financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
             topContributors: [],
             fundingCategories: [],
             limitFlags: []
           },
           {
-            name: "Joey Atkins / Donald Prichard (D primary)",
+            name: "Richard Olle (R primary challenger)",
             isIncumbent: false,
-            status: "Dem primary",
+            status: "GOP primary challenger (low-profile)",
+            funding: "Minimal reported",
+            financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
+            topContributors: [],
+            fundingCategories: [],
+            limitFlags: []
+          },
+          {
+            name: "Joey Atkins (D primary)",
+            isIncumbent: false,
+            status: "Dem primary contender",
             funding: "TBD",
-            financeLink: "",
+            financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
+            topContributors: [],
+            fundingCategories: [],
+            limitFlags: []
+          },
+          {
+            name: "Donald Prichard (D primary)",
+            isIncumbent: false,
+            status: "Dem primary contender",
+            funding: "TBD",
+            financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
+            topContributors: [],
+            fundingCategories: [],
+            limitFlags: []
+          },
+          {
+            name: "Kyle Gibson (NPA general)",
+            isIncumbent: false,
+            status: "No Party Affiliation general election candidate",
+            funding: "TBD",
+            financeLink: "https://dos.fl.gov/elections/candidates-committees/campaign-finance/",
             topContributors: [],
             fundingCategories: [],
             limitFlags: []
           }
         ],
-        fundingNotes: "Critical for ag lands, wetlands/marshlands protection vs development. Simpson (inc, Trump-endorsed): focuses on 'guardrails' for hemp, farm bill protecting ag from overreach/development. Critics question ties or effectiveness on sprawl. Primary challenger 'Matt The Welder'. Lobbyist influence in ag policy common - watch FDACS decisions on land use.",
-        sources: ["https://ballotpedia.org/Florida_Agriculture_Commissioner_election,_2026", "FDACS.wiltonsimpson.com", "floridapolitics on Simpson record 2026"],
+        keyIssues: [
+          { issue: "Marshlands / Wetlands Protection", stance: "Simpson: 2026 Farm Bill + Rural Lands easements (100k+ acres protected, e.g. Charlie Creek Marsh) guard ag land/marsh buffers from sprawl; FDACS role in ag/water policy. Critics: some conservation provisions, not aggressive enough vs dev pressure in Sarasota/Manatee" },
+          { issue: "Hemp / Cannabis Regulation", stance: "Focus on 'guardrails' and cracking down on intoxicating products (7-OH, etc.)" },
+          { issue: "Ag Land vs Development", stance: "Core tension for local: preserving farmland/wetlands (Myakka, etc.) or allowing growth/building" }
+        ],
+        fundingNotes: "Critical local impact: FDACS policies on ag land preservation (Rural & Family Lands Protection Program easements) directly affect Sarasota/Manatee marshlands/rural buffers vs developer pressure. Simpson (5th-gen farmer, Trump-endorsed): 2026 Florida Farm Bill (his priority, signed Mar 2026) protects rural/conservation lands from high-density dev (unanimous local approval required); preserved 100k+ acres via easements (e.g. marsh areas). Voting record excerpts: Supported the Farm Bill with provisions for ag land protection and hemp guardrails; backed rural economic development bills. Primary challengers: Matt 'The Welder' Taylor (outsider, populist) and Richard Olle (low-profile). Dems Joey Atkins, Donald Prichard; NPA Kyle Gibson. Agribusiness/lobbyist funding common — watch development interests on land-use. Heavy focus for marshlands transparency. Simpson's agribusiness ties vs challengers' outsider appeal.",
+        sources: ["https://ballotpedia.org/Florida_Agriculture_Commissioner_election,_2026", "https://www.fdacs.gov/", "https://floridapolitics.com/archives/793155-simpson-seeks-second-term/", "https://en.wikipedia.org/wiki/2026_Florida_Commissioner_of_Agriculture_election", "local reporting on 2026 Farm Bill & Rural Lands easements (e.g. Charlie Creek Marsh)"],
         color: "#10b981"
       }
     ];
@@ -636,6 +768,16 @@
         html += `<div style="margin-top:0.5rem; font-size:0.85rem;"><strong>Funding / Influence context:</strong> ${district.fundingNotes}</div>`;
       }
 
+      if (district.keyIssues && district.keyIssues.length > 0) {
+        html += `<div style="margin-top:0.5rem;"><strong>Key Issues:</strong><ul style="margin:2px 0; padding-left:16px; font-size:0.8rem;">`;
+        district.keyIssues.forEach(i => { html += `<li><b>${i.issue}:</b> ${i.stance}</li>`; });
+        html += `</ul></div>`;
+      }
+
+      if (district.pollingSources) {
+        html += `<div style="font-size:0.7rem; color:#f59e0b; margin-top:0.3rem;">Polling sources (treat with skepticism): ${district.pollingSources}</div>`;
+      }
+
       html += `<div class="source" style="margin-top:0.6rem;">Sources: ${district.sources.join(' • ')}</div>`;
       html += `</div>`;
 
@@ -654,7 +796,7 @@
       districts.forEach(d => {
         if (type === 'all' || d.type === type) {
           if (d.type === 'statewide') {
-            // Statewide: no map poly, but populate sidebar with first one on filter
+            // Statewide: no map poly (handled separately in filter)
           } else {
             renderDistrict(d);
           }
@@ -664,14 +806,58 @@
       if (type === 'statewide') {
         const statewide = districts.filter(d => d.type === 'statewide');
         if (statewide.length > 0) {
-          showDistrictDetails(statewide[0]);  // show Governor by default
-          // User can click again or we can improve
+          // Heavy focus: show both Governor and Ag Comm in sidebar with full rich details
+          let combinedHtml = '<div class="district-info" style="border: 2px solid #10b981; padding: 8px; background:#f0fdf4;"><h3 style="color:#166534; margin:0;">🔥 STATEWIDE HEAVY FOCUS: Governor + Ag Comm (Marshlands/Dev Key)</h3><small style="color:#166534;">Local impact huge for Sarasota/Manatee growth & wetlands. Cross-check polls with crowds/events. HEAVY SKEPTICISM — polls unreliable, use events & filings. (Raw office data from scraper JSON when loaded.)</small></div>';
+          statewide.forEach((race, idx) => {
+            if (idx > 0) combinedHtml += '<hr style="border-color:#10b981;">';
+            let raceHtml = `<strong style="color:#166534;">${race.name}</strong><br>`;
+            raceHtml += `<small>Incumbent: ${race.incumbent.name} — ${race.incumbent.notes}</small><br>`;
+            raceHtml += `<strong>Election:</strong> Primary ${race.election.primary} • General ${race.election.general}<br>`;
+            if (race.keyIssues && race.keyIssues.length > 0) {
+              raceHtml += `<strong>Key Issues:</strong><ul style="margin:4px 0; padding-left:16px; font-size:0.75rem;">`;
+              race.keyIssues.forEach(i => { raceHtml += `<li><b>${i.issue}:</b> ${i.stance}</li>`; });
+              raceHtml += `</ul>`;
+            }
+            // Full candidate rendering like local races
+            raceHtml += `<div style="margin-top:0.6rem;"><strong>Candidates</strong></div>`;
+            race.candidates.forEach(c => {
+              const cls = c.isIncumbent ? 'candidate incumbent' : 'candidate';
+              raceHtml += `<div class="${cls}"><strong>${c.name}</strong> ${c.isIncumbent ? '⭐ INCUMBENT' : ''}`;
+              raceHtml += `<div style="font-size:0.8rem; color:#64748b;">${c.status}</div>`;
+              if (c.funding) raceHtml += `<div class="funding">Funding: ${c.funding}</div>`;
+              if (c.financeLink) raceHtml += `<div style="font-size:0.75rem;"><a href="${c.financeLink}" target="_blank" style="color:#60a5fa;">View official finance reports →</a></div>`;
+              if (c.topContributors && c.topContributors.length > 0) {
+                raceHtml += `<div style="font-size:0.75rem; margin-top:0.25rem;"><strong>Top contributors:</strong>`;
+                c.topContributors.forEach(tc => {
+                  raceHtml += `<div style="margin-left:0.5rem;">• ${tc.name} <span style="color:#64748b;">(${tc.category})</span></div>`;
+                });
+                raceHtml += `</div>`;
+              }
+              if (c.fundingCategories && c.fundingCategories.length > 0) {
+                raceHtml += `<div style="font-size:0.75rem;">Categories: ${c.fundingCategories.join(", ")}</div>`;
+              }
+              if (c.limitFlags && c.limitFlags.length > 0) {
+                raceHtml += `<div style="font-size:0.75rem; color:#f59e0b;">⚠️ ${c.limitFlags.join("; ")}</div>`;
+              }
+              raceHtml += `</div>`;
+            });
+            if (race.fundingNotes) {
+              raceHtml += `<div style="margin-top:0.5rem; font-size:0.85rem;"><strong>Funding / Polling Notes (Skepticism):</strong> ${race.fundingNotes}</div>`;
+            }
+            if (race.pollingSources) raceHtml += `<div style="font-size:0.7rem; color:#166534;">Polls/Sources: ${race.pollingSources}</div>`;
+            raceHtml += `<div class="source" style="margin-top:0.3rem; font-size:0.7rem;">Sources: ${race.sources.join(' • ')}</div>`;
+            combinedHtml += raceHtml;
+          });
+          const panel = document.getElementById('selection-panel');
+          panel.innerHTML = combinedHtml;
         }
       }
     }
 
-    // Initial render
-    districts.forEach(d => renderDistrict(d));
+    // Initial render (skip statewide - they have no map polygons)
+    districts.forEach(d => {
+      if (d.type !== 'statewide') renderDistrict(d);
+    });
 
     // Demo: show first district on load
     setTimeout(() => {

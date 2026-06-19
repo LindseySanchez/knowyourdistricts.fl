@@ -2,7 +2,7 @@
   "meta": {
     "project": "knowyourdistricts.fl",
     "date": "2026-06-19",
-    "note": "Expanded manual seed + enhanced funding model for county commissions. Scraper output in offices_up_*.json. Use for site data layer. All entries require agent + human accuracy review against official sources.",
+    "note": "Expanded manual seed + enhanced funding model (local + statewide). Scraper output in offices_up_*.json. Use for site data layer. All entries require agent + human accuracy review against official sources. Statewide rich data seeded in index.html; sync to JSON for maintainability.",
     "disclaimer": "Informational only. Verify at sarasotavotes.gov, votemanatee.gov, and county finance portals."
   },
   "districts": [
@@ -63,6 +63,33 @@
       ],
       "fundingNotes": "School board races can attract targeted PAC/interest money.",
       "sources": ["https://www.votemanatee.gov/offices-up-for-election/"]
+    },
+    {
+      "id": "fl-governor-2026",
+      "type": "statewide",
+      "jurisdiction": "State of Florida",
+      "name": "Florida Governor 2026 (Statewide - Local Impact on Growth & Marshlands)",
+      "incumbent": { "name": "Open seat (Ron DeSantis term-limited)", "notes": "Major impact on local development, taxes, environment, budget." },
+      "election": { "primary": "2026-08-18", "general": "2026-11-03" },
+      "candidates": [
+        { "name": "Byron Donalds (R frontrunner, Trump endorsed)", "isIncumbent": false, "status": "Leading GOP primary (Trump-backed)", "funding": "~$81M+ total raised (campaign + PACs as of mid-2026 reports)", "financeLink": "https://dos.fl.gov/elections/candidates-committees/campaign-finance/", "topContributors": [ {"name": "Jeff Yass - $2.5M", "category": "Individual / Business"}, {"name": "Club for Growth - $2.5M", "category": "Political PACs"} ], "fundingCategories": ["Business", "Political PACs", "National GOP"], "limitFlags": [] },
+        { "name": "James Fishback (R - Gen Z / grassroots challenger)", "isIncumbent": false, "status": "Crowd favorite, polling underdog but rising", "funding": "Lower than Donalds; relies on small donors and events", "financeLink": "https://dos.fl.gov/elections/candidates-committees/campaign-finance/", "topContributors": [ {"name": "Small-dollar donors & online grassroots", "category": "Individuals"} ], "fundingCategories": ["Grassroots / Small Donors"], "limitFlags": [] }
+      ],
+      "fundingNotes": "Statewide race with massive local stakes for Sarasota/Manatee growth and marshlands. Polling vs Reality: Mainstream polls show big Donalds lead. HOWEVER: Fishback's events and small-donor metrics suggest stronger support; HEAVY SKEPTICISM ON ALL POLLING.",
+      "sources": ["https://ballotpedia.org/Florida_gubernatorial_and_lieutenant_gubernatorial_election,_2026", "https://dos.fl.gov/elections/candidates-committees/campaign-finance/"]
+    },
+    {
+      "id": "fl-ag-comm-2026",
+      "type": "statewide",
+      "jurisdiction": "State of Florida",
+      "name": "Florida Commissioner of Agriculture 2026 (Statewide - Marshlands & Ag vs Development)",
+      "incumbent": { "name": "Wilton Simpson (R)", "notes": "Incumbent; key player in ag land protection, hemp rules, and balancing development pressure on wetlands/marshlands." },
+      "election": { "primary": "2026-08-18", "general": "2026-11-03" },
+      "candidates": [
+        { "name": "Wilton Simpson (R incumbent, Trump endorsed)", "isIncumbent": true, "status": "Seeking re-election", "funding": "Strong incumbent + agribusiness support", "financeLink": "https://dos.fl.gov/elections/candidates-committees/campaign-finance/", "topContributors": [ {"name": "Florida Farm Bureau PAC and agribusiness groups (major in filings)", "category": "Ag / Business"} ], "fundingCategories": ["Agribusiness", "Business PACs"], "limitFlags": [] }
+      ],
+      "fundingNotes": "Critical local impact: FDACS policies on ag land preservation directly affect Sarasota/Manatee marshlands vs developer pressure. Heavy focus for marshlands transparency.",
+      "sources": ["https://ballotpedia.org/Florida_Agriculture_Commissioner_election,_2026", "https://www.fdacs.gov/"]
     }
   ]
 }

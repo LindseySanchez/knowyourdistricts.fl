@@ -1,14 +1,14 @@
 {
   "meta": {
     "jurisdiction": "Sarasota",
-    "scraped_at": "2026-06-19T12:36:18.481828Z",
+    "scraped_at": "2026-06-19T13:12:04.560200Z",
     "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election",
     "note": "Parsed from official SOE page. Review for completeness. This is bootstrap data for knowyourdistricts.fl."
   },
   "offices": [
     {
       "jurisdiction": "Sarasota County",
-      "section": "Special Districts",
+      "section": "County",
       "office_type": "County Commissioner",
       "description": "County Commissioner Districts 2 and 4",
       "seats_or_districts": "County Commissioner Districts 2 and 4",
@@ -16,23 +16,47 @@
     },
     {
       "jurisdiction": "Sarasota County",
-      "section": "Special Districts",
-      "office_type": "Other",
+      "section": "County",
+      "office_type": "Charter Review Board",
+      "description": "Charter Review Board Districts 1, 2, 3, 4 and 5",
+      "seats_or_districts": "Charter Review Board Districts 1, 2, 3, 4 and 5",
+      "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election"
+    },
+    {
+      "jurisdiction": "Sarasota County",
+      "section": "County",
+      "office_type": "Charter Review Board",
+      "description": "Charter Review Board District 2 (2-year term)",
+      "seats_or_districts": "Charter Review Board District 2 (2-year term)",
+      "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election"
+    },
+    {
+      "jurisdiction": "Sarasota County",
+      "section": "County",
+      "office_type": "Hospital Board",
       "description": "Hospital Board Northern District Seats 1 and 2",
       "seats_or_districts": "Hospital Board Northern District Seats 1 and 2",
       "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election"
     },
     {
       "jurisdiction": "Sarasota County",
-      "section": "Special Districts",
-      "office_type": "Other",
+      "section": "County",
+      "office_type": "Hospital Board",
+      "description": "Hospital Board Central District Seat 2",
+      "seats_or_districts": "Hospital Board Central District Seat 2",
+      "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election"
+    },
+    {
+      "jurisdiction": "Sarasota County",
+      "section": "County",
+      "office_type": "Hospital Board",
       "description": "Hospital Board Southern District Seats 1 and 2",
       "seats_or_districts": "Hospital Board Southern District Seats 1 and 2",
       "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election"
     },
     {
       "jurisdiction": "Sarasota County",
-      "section": "Special Districts",
+      "section": "County",
       "office_type": "School Board",
       "description": "School Board Districts 1, 4 and 5",
       "seats_or_districts": "School Board Districts 1, 4 and 5",
@@ -40,7 +64,7 @@
     },
     {
       "jurisdiction": "Sarasota County",
-      "section": "Special Districts",
+      "section": "Municipalities",
       "office_type": "Municipal",
       "description": "City of North Port District Seats 4 and 5",
       "seats_or_districts": "City of North Port District Seats 4 and 5",
@@ -48,7 +72,7 @@
     },
     {
       "jurisdiction": "Sarasota County",
-      "section": "Special Districts",
+      "section": "Municipalities",
       "office_type": "Municipal",
       "description": "City of Sarasota At Large (both seats)",
       "seats_or_districts": "City of Sarasota At Large (both seats)",
@@ -56,7 +80,7 @@
     },
     {
       "jurisdiction": "Sarasota County",
-      "section": "Special Districts",
+      "section": "Municipalities",
       "office_type": "Municipal",
       "description": "City of Venice Seats 1, 2, 5, 6 and 7",
       "seats_or_districts": "City of Venice Seats 1, 2, 5, 6 and 7",
@@ -64,7 +88,7 @@
     },
     {
       "jurisdiction": "Sarasota County",
-      "section": "Special Districts",
+      "section": "Municipalities",
       "office_type": "Municipal",
       "description": "Town of Longboat Key Districts 1, 3 and 5",
       "seats_or_districts": "Town of Longboat Key Districts 1, 3 and 5",
@@ -73,7 +97,23 @@
     {
       "jurisdiction": "Sarasota County",
       "section": "Special Districts",
-      "office_type": "Other",
+      "office_type": "Special District",
+      "description": "Blackburn Creek CDD Seats 2, 3 and 4",
+      "seats_or_districts": "Blackburn Creek CDD Seats 2, 3 and 4",
+      "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election"
+    },
+    {
+      "jurisdiction": "Sarasota County",
+      "section": "Special Districts",
+      "office_type": "Special District",
+      "description": "Bobcat Trail CDD Seats 1, 2 and 4",
+      "seats_or_districts": "Bobcat Trail CDD Seats 1, 2 and 4",
+      "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election"
+    },
+    {
+      "jurisdiction": "Sarasota County",
+      "section": "Special Districts",
+      "office_type": "Special District",
       "description": "Englewood Area Fire Control District Seats 1, 2 and 3",
       "seats_or_districts": "Englewood Area Fire Control District Seats 1, 2 and 3",
       "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election"
@@ -81,7 +121,7 @@
     {
       "jurisdiction": "Sarasota County",
       "section": "Special Districts",
-      "office_type": "Other",
+      "office_type": "Special District",
       "description": "Englewood Water District Seats 4 and 5",
       "seats_or_districts": "Englewood Water District Seats 4 and 5",
       "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election"
@@ -89,7 +129,7 @@
     {
       "jurisdiction": "Sarasota County",
       "section": "Special Districts",
-      "office_type": "Other",
+      "office_type": "Special District",
       "description": "Holiday Park Park and Recreation District Seats 1, 3, 5, 7 and 9",
       "seats_or_districts": "Holiday Park Park and Recreation District Seats 1, 3, 5, 7 and 9",
       "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election"
@@ -97,7 +137,15 @@
     {
       "jurisdiction": "Sarasota County",
       "section": "Special Districts",
-      "office_type": "Other",
+      "office_type": "Special District",
+      "description": "Lakeside Plantation CDD Seats 1, 2 and 3",
+      "seats_or_districts": "Lakeside Plantation CDD Seats 1, 2 and 3",
+      "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election"
+    },
+    {
+      "jurisdiction": "Sarasota County",
+      "section": "Special Districts",
+      "office_type": "Special District",
       "description": "Lakewood Ranch Stewardship Development District Seat 3",
       "seats_or_districts": "Lakewood Ranch Stewardship Development District Seat 3",
       "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election"
@@ -105,7 +153,15 @@
     {
       "jurisdiction": "Sarasota County",
       "section": "Special Districts",
-      "office_type": "Other",
+      "office_type": "Special District",
+      "description": "Laurel Road CDD, Seats 3 and 5",
+      "seats_or_districts": "Laurel Road CDD, Seats 3 and 5",
+      "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election"
+    },
+    {
+      "jurisdiction": "Sarasota County",
+      "section": "Special Districts",
+      "office_type": "Special District",
       "description": "LT Ranch Community Development District Seats 1 and 2",
       "seats_or_districts": "LT Ranch Community Development District Seats 1 and 2",
       "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election"
@@ -113,7 +169,31 @@
     {
       "jurisdiction": "Sarasota County",
       "section": "Special Districts",
-      "office_type": "Other",
+      "office_type": "Special District",
+      "description": "Sarasota National CDD Seats 1, 4 and 5",
+      "seats_or_districts": "Sarasota National CDD Seats 1, 4 and 5",
+      "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election"
+    },
+    {
+      "jurisdiction": "Sarasota County",
+      "section": "Special Districts",
+      "office_type": "Special District",
+      "description": "Stoneybrook at Venice CDD Seats 2, 3 and 5",
+      "seats_or_districts": "Stoneybrook at Venice CDD Seats 2, 3 and 5",
+      "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election"
+    },
+    {
+      "jurisdiction": "Sarasota County",
+      "section": "Special Districts",
+      "office_type": "Special District",
+      "description": "Toscana Isles CDD Seats 1 and 3",
+      "seats_or_districts": "Toscana Isles CDD Seats 1 and 3",
+      "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election"
+    },
+    {
+      "jurisdiction": "Sarasota County",
+      "section": "Special Districts",
+      "office_type": "Special District",
       "description": "Tri-Par Estates Park and Recreation District Seats 4, 5 and 6",
       "seats_or_districts": "Tri-Par Estates Park and Recreation District Seats 4, 5 and 6",
       "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election"
@@ -122,8 +202,32 @@
       "jurisdiction": "Sarasota County",
       "section": "Special Districts",
       "office_type": "Special District",
+      "description": "Venetian CDD Seats 2 and 4",
+      "seats_or_districts": "Venetian CDD Seats 2 and 4",
+      "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election"
+    },
+    {
+      "jurisdiction": "Sarasota County",
+      "section": "Special Districts",
+      "office_type": "Special District",
+      "description": "West Villages Improvement District Seat 5",
+      "seats_or_districts": "West Villages Improvement District Seat 5",
+      "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election"
+    },
+    {
+      "jurisdiction": "Sarasota County",
+      "section": "Special Districts",
+      "office_type": "Special District",
       "description": "Windward at Lakewood Ranch CDD Seats 2 and 5",
       "seats_or_districts": "Windward at Lakewood Ranch CDD Seats 2 and 5",
+      "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election"
+    },
+    {
+      "jurisdiction": "Sarasota County",
+      "section": "Special Districts",
+      "office_type": "Special District",
+      "description": "The Woodlands CDD Seats 1, 2 and 3",
+      "seats_or_districts": "The Woodlands CDD Seats 1, 2 and 3",
       "source": "https://www.sarasotavotes.gov/181/Offices-up-for-Election"
     }
   ]

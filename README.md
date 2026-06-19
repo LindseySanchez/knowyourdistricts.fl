@@ -18,6 +18,7 @@ Interactive map + transparent tracker for upcoming local elections in Sarasota, 
 - **More depth added**: Specific scandals/lobbyist/dev money - Neunder PAC $95k from Neal/Culverhouse/Benderson/Jensen + post-vote Siesta Key Brown LLCs (refunded some); Smith dev history $53k+ + budget votes + Siesta Key hotel opposition vs past funding. Siesta Key D2 focus expanded (community plan, Village ties, hotel fights).
 - Governor: Added Fishback emphasis - crowds/Gen Z energy vs Byron; note that his polls/internal data disagree with mainstream AIF/Emerson (which favor Donalds heavily). Project skepticism on "mainstream GOP" polls.
 - Ag Comm: Policy depth on marshlands/dev vs Simpson record.
+- **Minor polish applied**: Olle in narrative, outdated comment fixed, financeLinks consistent, name formatting, extended showDistrictDetails for keyIssues/pollingSources, load comment fixed, statewide rich data synced to seed JSON. All core fixes + re-verified with subagents.
 - Heavy disclaimers + source links on everything (polls especially treated with skepticism)
 
 ## How to run (today)
