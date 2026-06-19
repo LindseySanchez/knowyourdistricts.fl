@@ -1,0 +1,4 @@
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+# pip install -r requirements.txt
+# Note: Run from project root or install globally. For Windows, use python -m pip install -r scripts/requirements.txt

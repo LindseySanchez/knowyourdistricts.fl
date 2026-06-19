@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "project": "knowyourdistricts.fl",
+    "date": "2026-06-19",
+    "note": "Early manual seed from official sources. Will be replaced by automated pipeline + agent verification.",
+    "disclaimer": "This is not official. Verify at source links. Polling skepticism required."
+  },
+  "districts": [
+    {
+      "id": "sarasota-cc-d2",
+      "type": "county",
+      "jurisdiction": "Sarasota County",
+      "name": "Sarasota County Commission District 2",
+      "incumbent": {
+        "name": "Mark Smith",
+        "elected": "2022",
+        "termEnds": "2026"
+      },
+      "election": {
+        "primary": "2026-08-18",
+        "general": "2026-11-03"
+      },
+      "candidates": [
+        {
+          "name": "Mark Smith",
+          "isIncumbent": true,
+          "fundingSummary": "Development and business interests reported"
+        }
+      ],
+      "sources": [
+        "https://www.sarasotavotes.gov/181/Offices-up-for-Election",
+        "https://www.scgov.net/government/county-commission-bcc"
+      ]
+    }
+  ]
+}

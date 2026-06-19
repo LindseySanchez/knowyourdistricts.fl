@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "project": "knowyourdistricts.fl",
+    "date": "2026-06-19",
+    "note": "Expanded manual seed + enhanced funding model for county commissions. Scraper output in offices_up_*.json. Use for site data layer. All entries require agent + human accuracy review against official sources.",
+    "disclaimer": "Informational only. Verify at sarasotavotes.gov, votemanatee.gov, and county finance portals."
+  },
+  "districts": [
+    {
+      "id": "sarasota-cc-d2",
+      "type": "county",
+      "jurisdiction": "Sarasota County",
+      "name": "Sarasota County Commission District 2",
+      "incumbent": {
+        "name": "Mark Smith",
+        "elected": "2022",
+        "termEnds": "2026"
+      },
+      "election": {
+        "primary": "2026-08-18",
+        "general": "2026-11-03"
+      },
+      "candidates": [
+        {
+          "name": "Mark Smith",
+          "isIncumbent": true,
+          "funding": "Development & business interests visible",
+          "financeLink": "https://www.sarasotavotes.gov/196/Financial-Reporting-for-Candidates-Commi",
+          "topContributors": [
+            {"name": "Real estate / development interests (reported)", "category": "Real Estate/Development"},
+            {"name": "Business PACs / local donors", "category": "Business PACs"}
+          ],
+          "fundingCategories": ["Real Estate/Development", "Business PACs"],
+          "limitFlags": []
+        }
+      ],
+      "fundingNotes": "District 2 covers bay/beach areas. Competitive history. Check for development money patterns in filings.",
+      "sources": [
+        "https://www.sarasotavotes.gov/181/Offices-up-for-Election",
+        "https://www.scgov.net/government/county-commission-bcc"
+      ]
+    },
+    {
+      "id": "manatee-sb-d2",
+      "type": "school",
+      "jurisdiction": "Manatee County",
+      "name": "Manatee County School Board District 2",
+      "incumbent": {
+        "name": "Cindy Spray",
+        "notes": "Incumbent. Seat up 2026."
+      },
+      "election": {
+        "primary": "2026-08-18",
+        "general": "2026-11-03"
+      },
+      "candidates": [
+        {
+          "name": "Cindy Spray",
+          "isIncumbent": true,
+          "funding": "Monitor local education-related donors",
+          "financeLink": "https://www.votemanatee.gov/"
+        }
+      ],
+      "fundingNotes": "School board races can attract targeted PAC/interest money.",
+      "sources": ["https://www.votemanatee.gov/offices-up-for-election/"]
+    }
+  ]
+}

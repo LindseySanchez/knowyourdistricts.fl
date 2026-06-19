@@ -1,0 +1,458 @@
+{
+  "meta": {
+    "jurisdiction": "Manatee",
+    "scraped_at": "2026-06-19T12:36:18.903389Z",
+    "source": "https://www.votemanatee.gov/offices-up-for-election/",
+    "note": "Parsed from official SOE page. Review for completeness. This is bootstrap data for knowyourdistricts.fl."
+  },
+  "offices": [
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "County Commissioner",
+      "description": "Commissioner of Agriculture",
+      "seats_or_districts": "Commissioner of Agriculture",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "County Commissioner",
+      "description": "Board of County Commissioners: District 1 (2 year term) Districts 2, 4 and 6 At Large (4 year term)",
+      "seats_or_districts": "Board of County Commissioners: District 1 (2 year term) Districts 2, 4 and 6 At Large (4 year term)",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "School Board",
+      "description": "School Board: Districts 2, 4 and 5",
+      "seats_or_districts": "School Board: Districts 2, 4 and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Duette Fire District, Seat 1, 3, and 5 (4 yr term), Seat 2 and 4 (2 yr term)",
+      "seats_or_districts": "Duette Fire District, Seat 1, 3, and 5 (4 yr term), Seat 2 and 4 (2 yr term)",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Cedar Hammock Fire District, Seat 1 (2 yr term), Seat 2, and 4 (4yr term)",
+      "seats_or_districts": "Cedar Hammock Fire District, Seat 1 (2 yr term), Seat 2, and 4 (4yr term)",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "East Manatee Fire District, Seat 1, 3, and 5",
+      "seats_or_districts": "East Manatee Fire District, Seat 1, 3, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "North River Fire District, Seat 1, 3, and 7",
+      "seats_or_districts": "North River Fire District, Seat 1, 3, and 7",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Parrish Fire District, Seat 1, 3, and 5",
+      "seats_or_districts": "Parrish Fire District, Seat 1, 3, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Southern Manatee Fire District, Seat 1, 3, and 5",
+      "seats_or_districts": "Southern Manatee Fire District, Seat 1, 3, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "West Manatee Fire District, Seat 2, 3, and 4",
+      "seats_or_districts": "West Manatee Fire District, Seat 2, 3, and 4",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Artisan Lakes CDD, Seat 1, 4, and 5",
+      "seats_or_districts": "Artisan Lakes CDD, Seat 1, 4, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Artisan Lakes East CDD, Seat 4, and 5",
+      "seats_or_districts": "Artisan Lakes East CDD, Seat 4, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Aviary at Rutland Ranch CDD, Seat 1, and 2",
+      "seats_or_districts": "Aviary at Rutland Ranch CDD, Seat 1, and 2",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Brookstone CDD, Seat 2, 4, and 5",
+      "seats_or_districts": "Brookstone CDD, Seat 2, 4, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Copperstone CDD, Seat 1, 2, and 3",
+      "seats_or_districts": "Copperstone CDD, Seat 1, 2, and 3",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Cross Creek CDD, Seat 1, 2, and 5",
+      "seats_or_districts": "Cross Creek CDD, Seat 1, 2, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "DW Bayview CDD, Seat 1, and 3",
+      "seats_or_districts": "DW Bayview CDD, Seat 1, and 3",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Eagle Pointe CDD, Seat 1, and 3",
+      "seats_or_districts": "Eagle Pointe CDD, Seat 1, and 3",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Evergreen CDD, Seat 4, and 5",
+      "seats_or_districts": "Evergreen CDD, Seat 4, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Forest Creek CDD, Seat 4, and 5",
+      "seats_or_districts": "Forest Creek CDD, Seat 4, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Greyhawk Landing CDD, Seat 1, 3, and 5",
+      "seats_or_districts": "Greyhawk Landing CDD, Seat 1, 3, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Harbourage at Braden River CDD, Seat 3, 4, and 5",
+      "seats_or_districts": "Harbourage at Braden River CDD, Seat 3, 4, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Harrison Ranch CDD, Seat 1, 2, and 3",
+      "seats_or_districts": "Harrison Ranch CDD, Seat 1, 2, and 3",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Heritage Harbour North CDD, Seat 1, 3, and 5",
+      "seats_or_districts": "Heritage Harbour North CDD, Seat 1, 3, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Heritage Harbour South CDD, Seat 3, and 5",
+      "seats_or_districts": "Heritage Harbour South CDD, Seat 3, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Lakewood Ranch CDD 1, Seat 1, 3, and 5",
+      "seats_or_districts": "Lakewood Ranch CDD 1, Seat 1, 3, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Lakewood Ranch CDD 2, Seat 4, and 5",
+      "seats_or_districts": "Lakewood Ranch CDD 2, Seat 4, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Lakewood Ranch CDD 4, Seat 1, 2, and 3",
+      "seats_or_districts": "Lakewood Ranch CDD 4, Seat 1, 2, and 3",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Lakewood Ranch CDD 5, Seat 3, and 5",
+      "seats_or_districts": "Lakewood Ranch CDD 5, Seat 3, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Lakewood Ranch CDD 6, Seat 1, 2, and 3",
+      "seats_or_districts": "Lakewood Ranch CDD 6, Seat 1, 2, and 3",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Legends Bay CDD, Seat 3, and 5",
+      "seats_or_districts": "Legends Bay CDD, Seat 3, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Lexington CDD, Seat 3, 4, and 5",
+      "seats_or_districts": "Lexington CDD, Seat 3, 4, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Palma Sola Trace CDD, Seat 1, 2, and 3",
+      "seats_or_districts": "Palma Sola Trace CDD, Seat 1, 2, and 3",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Palms of Terra Ceia Bay CDD, Seat 1, 3, and 5",
+      "seats_or_districts": "Palms of Terra Ceia Bay CDD, Seat 1, 3, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Parrish Plantation CDD, Seat 3, and 4",
+      "seats_or_districts": "Parrish Plantation CDD, Seat 3, and 4",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Sanctuary Cove CDD, Seat 2, 3, and 4",
+      "seats_or_districts": "Sanctuary Cove CDD, Seat 2, 3, and 4",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Silverleaf CDD, Seat 1, 2, and 4",
+      "seats_or_districts": "Silverleaf CDD, Seat 1, 2, and 4",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Summer Woods CDD, Seat 3, 4, and 5",
+      "seats_or_districts": "Summer Woods CDD, Seat 3, 4, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Tara CDD, Seat 1, 3, and 5",
+      "seats_or_districts": "Tara CDD, Seat 1, 3, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Trevesta CDD, Seat 1, 2, and 3",
+      "seats_or_districts": "Trevesta CDD, Seat 1, 2, and 3",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "University Place CDD, Seat 1, and 3",
+      "seats_or_districts": "University Place CDD, Seat 1, and 3",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Waterlefe CDD, Seat 1, 3, and 5",
+      "seats_or_districts": "Waterlefe CDD, Seat 1, 3, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Waters Edge CDD, Seat 1, 4, and 5",
+      "seats_or_districts": "Waters Edge CDD, Seat 1, 4, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Willow Hammock CDD, Seat 2, and 5",
+      "seats_or_districts": "Willow Hammock CDD, Seat 2, and 5",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Willow Walk CDD, Seat 1, 2, and 3",
+      "seats_or_districts": "Willow Walk CDD, Seat 1, 2, and 3",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Special / Fire District",
+      "description": "Willows CDD, Seat 1, and 2",
+      "seats_or_districts": "Willows CDD, Seat 1, and 2",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Municipal",
+      "description": "Lakewood Ranch Stewardship District, Seat 3",
+      "seats_or_districts": "Lakewood Ranch Stewardship District, Seat 3",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "County Commissioner",
+      "description": "Commissioners (Two Seats)",
+      "seats_or_districts": "Commissioners (Two Seats)",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Municipal",
+      "description": "City Council Ward 2",
+      "seats_or_districts": "City Council Ward 2",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Municipal",
+      "description": "City Council Ward 3",
+      "seats_or_districts": "City Council Ward 3",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "Municipal",
+      "description": "City Council Ward 4",
+      "seats_or_districts": "City Council Ward 4",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "County Commissioner",
+      "description": "Commissioner Ward 2",
+      "seats_or_districts": "Commissioner Ward 2",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "County Commissioner",
+      "description": "Commissioner Ward 3",
+      "seats_or_districts": "Commissioner Ward 3",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "County Commissioner",
+      "description": "Commissioner, Ward 1",
+      "seats_or_districts": "Commissioner, Ward 1",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "County Commissioner",
+      "description": "Commissioner, Ward 2",
+      "seats_or_districts": "Commissioner, Ward 2",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    },
+    {
+      "jurisdiction": "Manatee County",
+      "section": "Municipalities",
+      "office_type": "County Commissioner",
+      "description": "Commissioner, Ward 3",
+      "seats_or_districts": "Commissioner, Ward 3",
+      "source": "https://www.votemanatee.gov/offices-up-for-election/"
+    }
+  ]
+}
